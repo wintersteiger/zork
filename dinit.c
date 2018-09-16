@@ -48,10 +48,10 @@ integer c;
 integer *pi;
 FILE *indxfile;
 {
-    integer ch;	/* Local variable for rdint */
+    integer ch;    /* Local variable for rdint */
 
     while (c-- != 0)
-	*pi++ = rdint(indxfile);
+    *pi++ = rdint(indxfile);
 }
 
 /* Read a partial array of integers.  These are stored as index,value
@@ -63,23 +63,23 @@ integer c;
 integer *pi;
 FILE *indxfile;
 {
-    integer ch;	/* Local variable for rdint */
+    integer ch;    /* Local variable for rdint */
 
     while (1) {
-	int i;
+    int i;
 
-	if (c < 255) {
-	    i = getc(indxfile);
-	    if (i == 255)
-		return;
-	}
-	else {
-	    i = rdint(indxfile);
-	    if (i == -1)
-		return;
-	}
+    if (c < 255) {
+        i = getc(indxfile);
+        if (i == 255)
+        return;
+    }
+    else {
+        i = rdint(indxfile);
+        if (i == -1)
+        return;
+    }
 
-	pi[i] = rdint(indxfile);
+    pi[i] = rdint(indxfile);
     }
 }
 
@@ -91,7 +91,7 @@ logical *pf;
 FILE *indxfile;
 {
     while (c-- != 0)
-	*pf++ = getc(indxfile);
+    *pf++ = getc(indxfile);
 }
 
 logical init_()
@@ -112,9 +112,9 @@ logical init_()
 /* FIRST CHECK FOR PROTECTION VIOLATION */
 
     if (protected()) {
-	goto L10000;
+    goto L10000;
     }
-/* 						!PROTECTION VIOLATION? */
+/*                         !PROTECTION VIOLATION? */
     more_output("There appears before you a threatening figure clad all over");
     more_output("in heavy black armor.  His legs seem like the massive trunk");
     more_output("of the oak tree.  His broad shoulders and helmeted head loom");
@@ -133,9 +133,9 @@ logical init_()
 
 L10000:
     ret_val = FALSE_;
-/* 						!ASSUME INIT FAILS. */
+/*                         !ASSUME INIT FAILS. */
     mmax = 1050;
-/* 						!SET UP ARRAY LIMITS. */
+/*                         !SET UP ARRAY LIMITS. */
     omax = 220;
     rmax = 200;
     vmax = 4;
@@ -148,7 +148,7 @@ L10000:
     dirmax = 15;
 
     rmsg_1.mlnt = 0;
-/* 						!INIT ARRAY COUNTERS. */
+/*                         !INIT ARRAY COUNTERS. */
     objcts_1.olnt = 0;
     rooms_1.rlnt = 0;
     vill_1.vlnt = 0;
@@ -158,7 +158,7 @@ L10000:
     oroom2_1.r2lnt = 0;
 
     state_1.ltshft = 10;
-/* 						!SET UP STATE VARIABLES. */
+/*                         !SET UP STATE VARIABLES. */
     state_1.mxscor = state_1.ltshft;
     state_1.egscor = 0;
     state_1.egmxsc = 0;
@@ -170,50 +170,50 @@ L10000:
     state_1.mungrm = 0;
     state_1.hs = 0;
     prsvec_1.prsa = 0;
-/* 						!CLEAR PARSE VECTOR. */
+/*                         !CLEAR PARSE VECTOR. */
     prsvec_1.prsi = 0;
     prsvec_1.prso = 0;
     prsvec_1.prscon = 1;
     orphs_1.oflag = 0;
-/* 						!CLEAR ORPHANS. */
+/*                         !CLEAR ORPHANS. */
     orphs_1.oact = 0;
     orphs_1.oslot = 0;
     orphs_1.oprep = 0;
     orphs_1.oname = 0;
     hack_1.thfflg = FALSE_;
-/* 						!THIEF NOT INTRODUCED BUT */
+/*                         !THIEF NOT INTRODUCED BUT */
     hack_1.thfact = TRUE_;
-/* 						!IS ACTIVE. */
+/*                         !IS ACTIVE. */
     hack_1.swdact = FALSE_;
-/* 						!SWORD IS INACTIVE. */
+/*                         !SWORD IS INACTIVE. */
     hack_1.swdsta = 0;
-/* 						!SWORD IS OFF. */
+/*                         !SWORD IS OFF. */
 
     recno = 1;
-/* 						!INIT DB FILE POINTER. */
+/*                         !INIT DB FILE POINTER. */
     star_1.mbase = 0;
-/* 						!INIT MELEE BASE. */
+/*                         !INIT MELEE BASE. */
 /* INIT, PAGE 3 */
 
 /* INIT ALL ARRAYS. */
 
     i__1 = cmax;
     for (i = 1; i <= i__1; ++i) {
-/* 						!CLEAR CLOCK EVENTS */
-	cevent_1.cflag[i - 1] = FALSE_;
-	cevent_1.ctick[i - 1] = 0;
-	cevent_1.cactio[i - 1] = 0;
+/*                         !CLEAR CLOCK EVENTS */
+    cevent_1.cflag[i - 1] = FALSE_;
+    cevent_1.ctick[i - 1] = 0;
+    cevent_1.cactio[i - 1] = 0;
 /* L5: */
     }
 
     i__1 = fmax;
     for (i = 1; i <= i__1; ++i) {
-/* 						!CLEAR FLAGS. */
-	flags[i - 1] = FALSE_;
+/*                         !CLEAR FLAGS. */
+    flags[i - 1] = FALSE_;
 /* L10: */
     }
     findex_1.buoyf = TRUE_;
-/* 						!SOME START AS TRUE. */
+/*                         !SOME START AS TRUE. */
     findex_1.egyptf = TRUE_;
     findex_1.cagetf = TRUE_;
     findex_1.mr1f = TRUE_;
@@ -221,12 +221,12 @@ L10000:
     findex_1.follwf = TRUE_;
     i__1 = smax;
     for (i = 1; i <= i__1; ++i) {
-/* 						!CLEAR SWITCHES. */
-	switch_[i - 1] = 0;
+/*                         !CLEAR SWITCHES. */
+    switch_[i - 1] = 0;
 /* L12: */
     }
     findex_1.ormtch = 4;
-/* 						!NUMBER OF MATCHES. */
+/*                         !NUMBER OF MATCHES. */
     findex_1.lcell = 1;
     findex_1.pnumb = 1;
     findex_1.mdir = 270;
@@ -235,79 +235,79 @@ L10000:
 
     i__1 = r2max;
     for (i = 1; i <= i__1; ++i) {
-/* 						!CLEAR ROOM 2 ARRAY. */
-	oroom2_1.rroom2[i - 1] = 0;
-	oroom2_1.oroom2[i - 1] = 0;
+/*                         !CLEAR ROOM 2 ARRAY. */
+    oroom2_1.rroom2[i - 1] = 0;
+    oroom2_1.oroom2[i - 1] = 0;
 /* L15: */
     }
 
     i__1 = xmax;
     for (i = 1; i <= i__1; ++i) {
-/* 						!CLEAR TRAVEL ARRAY. */
-	exits_1.travel[i - 1] = 0;
+/*                         !CLEAR TRAVEL ARRAY. */
+    exits_1.travel[i - 1] = 0;
 /* L20: */
     }
 
     i__1 = vmax;
     for (i = 1; i <= i__1; ++i) {
-/* 						!CLEAR VILLAINS ARRAYS. */
-	vill_1.vopps[i - 1] = 0;
-	vill_1.vprob[i - 1] = 0;
-	vill_1.villns[i - 1] = 0;
-	vill_1.vbest[i - 1] = 0;
-	vill_1.vmelee[i - 1] = 0;
+/*                         !CLEAR VILLAINS ARRAYS. */
+    vill_1.vopps[i - 1] = 0;
+    vill_1.vprob[i - 1] = 0;
+    vill_1.villns[i - 1] = 0;
+    vill_1.vbest[i - 1] = 0;
+    vill_1.vmelee[i - 1] = 0;
 /* L30: */
     }
 
     i__1 = omax;
     for (i = 1; i <= i__1; ++i) {
-/* 						!CLEAR OBJECT ARRAYS. */
-	objcts_1.odesc1[i - 1] = 0;
-	objcts_1.odesc2[i - 1] = 0;
-	objcts_1.odesco[i - 1] = 0;
-	objcts_1.oread[i - 1] = 0;
-	objcts_1.oactio[i - 1] = 0;
-	objcts_1.oflag1[i - 1] = 0;
-	objcts_1.oflag2[i - 1] = 0;
-	objcts_1.ofval[i - 1] = 0;
-	objcts_1.otval[i - 1] = 0;
-	objcts_1.osize[i - 1] = 0;
-	objcts_1.ocapac[i - 1] = 0;
-	objcts_1.ocan[i - 1] = 0;
-	objcts_1.oadv[i - 1] = 0;
-	objcts_1.oroom[i - 1] = 0;
+/*                         !CLEAR OBJECT ARRAYS. */
+    objcts_1.odesc1[i - 1] = 0;
+    objcts_1.odesc2[i - 1] = 0;
+    objcts_1.odesco[i - 1] = 0;
+    objcts_1.oread[i - 1] = 0;
+    objcts_1.oactio[i - 1] = 0;
+    objcts_1.oflag1[i - 1] = 0;
+    objcts_1.oflag2[i - 1] = 0;
+    objcts_1.ofval[i - 1] = 0;
+    objcts_1.otval[i - 1] = 0;
+    objcts_1.osize[i - 1] = 0;
+    objcts_1.ocapac[i - 1] = 0;
+    objcts_1.ocan[i - 1] = 0;
+    objcts_1.oadv[i - 1] = 0;
+    objcts_1.oroom[i - 1] = 0;
 /* L40: */
     }
 
     i__1 = rmax;
     for (i = 1; i <= i__1; ++i) {
-/* 						!CLEAR ROOM ARRAYS. */
-	rooms_1.rdesc1[i - 1] = 0;
-	rooms_1.rdesc2[i - 1] = 0;
-	rooms_1.ractio[i - 1] = 0;
-	rooms_1.rflag[i - 1] = 0;
-	rooms_1.rval[i - 1] = 0;
-	rooms_1.rexit[i - 1] = 0;
+/*                         !CLEAR ROOM ARRAYS. */
+    rooms_1.rdesc1[i - 1] = 0;
+    rooms_1.rdesc2[i - 1] = 0;
+    rooms_1.ractio[i - 1] = 0;
+    rooms_1.rflag[i - 1] = 0;
+    rooms_1.rval[i - 1] = 0;
+    rooms_1.rexit[i - 1] = 0;
 /* L50: */
     }
 
     i__1 = mmax;
     for (i = 1; i <= i__1; ++i) {
-/* 						!CLEAR MESSAGE DIRECTORY. */
-	rmsg_1.rtext[i - 1] = 0;
+/*                         !CLEAR MESSAGE DIRECTORY. */
+    rmsg_1.rtext[i - 1] = 0;
 /* L60: */
     }
 
     i__1 = amax;
     for (i = 1; i <= i__1; ++i) {
-/* 						!CLEAR ADVENTURER'S ARRAYS. */
-	advs_1.aroom[i - 1] = 0;
-	advs_1.ascore[i - 1] = 0;
-	advs_1.avehic[i - 1] = 0;
-	advs_1.aobj[i - 1] = 0;
-	advs_1.aactio[i - 1] = 0;
-	advs_1.astren[i - 1] = 0;
-	advs_1.aflag[i - 1] = 0;
+/*                         !CLEAR ADVENTURER'S ARRAYS. */
+    advs_1.aroom[i - 1] = 0;
+    advs_1.ascore[i - 1] = 0;
+    advs_1.avehic[i - 1] = 0;
+    advs_1.aobj[i - 1] = 0;
+    advs_1.aactio[i - 1] = 0;
+    advs_1.astren[i - 1] = 0;
+    advs_1.aflag[i - 1] = 0;
 /* L70: */
     }
 
@@ -321,13 +321,13 @@ L10000:
 /* this way, the wizard doesn't have to recompile to use gdt */
 
     if (wizard()) {
-	debug_1.gdtflg = 1;
+    debug_1.gdtflg = 1;
     }
 
 #endif /* ALLOW_GDT */
 
     screen_1.fromdr = 0;
-/* 						!INIT SCOL GOODIES. */
+/*                         !INIT SCOL GOODIES. */
     screen_1.scolrm = 0;
     screen_1.scolac = 0;
 /* INIT, PAGE 4 */
@@ -336,12 +336,12 @@ L10000:
 
 #ifdef __AMOS__
     if ((dbfile = fdopen(ropen(LOCALTEXTFILE, 0), BINREAD)) == NULL &&
-	(dbfile = fdopen(ropen(TEXTFILE, 0), BINREAD)) == NULL)
+    (dbfile = fdopen(ropen(TEXTFILE, 0), BINREAD)) == NULL)
 #else
     if ((dbfile = fopen(LOCALTEXTFILE, BINREAD)) == NULL &&
-	(dbfile = fopen(TEXTFILE, BINREAD)) == NULL)
+    (dbfile = fopen(TEXTFILE, BINREAD)) == NULL)
 #endif
-	goto L1950;
+    goto L1950;
 
     indxfile = dbfile;
 
@@ -349,9 +349,9 @@ L10000:
     j = rdint(indxfile);
     k = rdint(indxfile);
 
-/* 						!GET VERSION. */
+/*                         !GET VERSION. */
     if (i != vers_1.vmaj || j != vers_1.vmin) {
-	goto L1925;
+    goto L1925;
     }
 
     state_1.mxscor = rdint(indxfile);
@@ -417,7 +417,7 @@ L10000:
 /* Save location of start of message text */
     rmsg_1.mrloc = ftell(indxfile);
 
-/* 						!INIT DONE. */
+/*                         !INIT DONE. */
 
 /* INIT, PAGE 5 */
 
@@ -444,7 +444,7 @@ L1925:
     printf("%s is version %1d.%1d%c.\n", TEXTFILE, i, j, k);
     more_output(NULL);
     printf("I require version %1d.%1d%c.\n", vers_1.vmaj, vers_1.vmin,
-	   vers_1.vedit);
+       vers_1.vedit);
     goto L1975;
 L1950:
     more_output(NULL);

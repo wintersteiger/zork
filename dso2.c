@@ -22,71 +22,71 @@ integer who;
     integer bits;
 
     ret_val = FALSE_;
-/* 						!ASSUME FAILS. */
+/*                         !ASSUME FAILS. */
     lhr = (rooms_1.rflag[play_1.here - 1] & RLAND) != 0;
     lnr = (rooms_1.rflag[nr - 1] & RLAND) != 0;
     j = advs_1.avehic[who - 1];
-/* 						!HIS VEHICLE */
+/*                         !HIS VEHICLE */
 
     if (j != 0) {
-	goto L100;
+    goto L100;
     }
-/* 						!IN VEHICLE? */
+/*                         !IN VEHICLE? */
     if (lnr) {
-	goto L500;
+    goto L500;
     }
-/* 						!NO, GOING TO LAND? */
+/*                         !NO, GOING TO LAND? */
     rspeak_(427);
-/* 						!CAN'T GO WITHOUT VEHICLE. */
+/*                         !CAN'T GO WITHOUT VEHICLE. */
     return ret_val;
 
 L100:
     bits = 0;
-/* 						!ASSUME NOWHERE. */
+/*                         !ASSUME NOWHERE. */
     if (j == oindex_1.rboat) {
-	bits = RWATER;
+    bits = RWATER;
     }
-/* 						!IN BOAT? */
+/*                         !IN BOAT? */
     if (j == oindex_1.ballo) {
-	bits = RAIR;
+    bits = RAIR;
     }
-/* 						!IN BALLOON? */
+/*                         !IN BALLOON? */
     if (j == oindex_1.bucke) {
-	bits = RBUCK;
+    bits = RBUCK;
     }
-/* 						!IN BUCKET? */
+/*                         !IN BUCKET? */
     nlv = (rooms_1.rflag[nr - 1] & bits) == 0;
     if (! lnr && nlv || lnr && lhr && nlv && bits != RLAND) {
-	goto L800;
+    goto L800;
     }
 
 L500:
     ret_val = TRUE_;
-/* 						!MOVE SHOULD SUCCEED. */
+/*                         !MOVE SHOULD SUCCEED. */
     if ((rooms_1.rflag[nr - 1] & RMUNG) == 0) {
-	goto L600;
+    goto L600;
     }
     rspeak_(rrand[nr - 1]);
-/* 						!YES, TELL HOW. */
+/*                         !YES, TELL HOW. */
     return ret_val;
 
 L600:
     if (who != aindex_1.player) {
-	newsta_(advs_1.aobj[who - 1], 0, nr, 0, 0);
+    newsta_(advs_1.aobj[who - 1], 0, nr, 0, 0);
     }
     if (j != 0) {
-	newsta_(j, 0, nr, 0, 0);
+    newsta_(j, 0, nr, 0, 0);
     }
     play_1.here = nr;
     advs_1.aroom[who - 1] = play_1.here;
     scrupd_(rooms_1.rval[nr - 1]);
-/* 						!SCORE ROOM */
+/*                         !SCORE ROOM */
     rooms_1.rval[nr - 1] = 0;
     return ret_val;
 
 L800:
     rspsub_(428, objcts_1.odesc2[j - 1]);
-/* 						!WRONG VEHICLE. */
+/*                         !WRONG VEHICLE. */
     return ret_val;
 } /* moveto_ */
 
@@ -111,25 +111,25 @@ logical flg;
     as = advs_1.ascore[play_1.winner - 1];
 
     if (findex_1.endgmf) {
-	goto L60;
+    goto L60;
     }
-/* 						!ENDGAME? */
+/*                         !ENDGAME? */
     more_output(NULL);
     printf("Your score ");
     if (flg)
-	printf("would be");
+    printf("would be");
     else
-	printf("is");
+    printf("is");
     printf(" %d [total of %d points], in %d move", as, state_1.mxscor,
-	    state_1.moves);
+        state_1.moves);
     if (state_1.moves != 1)
-	printf("s");
+    printf("s");
     printf(".\n");
 
     for (i = 1; i <= 10; ++i) {
-	if (as * 20 / state_1.mxscor >= rank[i - 1]) {
-	    goto L50;
-	}
+    if (as * 20 / state_1.mxscor >= rank[i - 1]) {
+        goto L50;
+    }
 /* L10: */
     }
 L50:
@@ -141,16 +141,16 @@ L60:
     more_output(NULL);
     printf("Your score in the endgame ");
     if (flg)
-	printf("would be");
+    printf("would be");
     else
-	printf("is");
+    printf("is");
     printf(" %d [total of %d points], in %d moves.\n", state_1.egscor,
-	   state_1.egmxsc, state_1.moves);
+       state_1.egmxsc, state_1.moves);
 
     for (i = 1; i <= 5; ++i) {
-	if (state_1.egscor * 20 / state_1.egmxsc >= erank[i - 1]) {
-	    goto L80;
-	}
+    if (state_1.egscor * 20 / state_1.egmxsc >= erank[i - 1]) {
+        goto L80;
+    }
 /* L70: */
     }
 L80:
@@ -166,23 +166,23 @@ void scrupd_(n)
 integer n;
 {
     if (findex_1.endgmf) {
-	goto L100;
+    goto L100;
     }
-/* 						!ENDGAME? */
+/*                         !ENDGAME? */
     advs_1.ascore[play_1.winner - 1] += n;
-/* 						!UPDATE SCORE */
+/*                         !UPDATE SCORE */
     state_1.rwscor += n;
-/* 						!UPDATE RAW SCORE */
+/*                         !UPDATE RAW SCORE */
     if (advs_1.ascore[play_1.winner - 1] < state_1.mxscor - state_1.deaths * 
-	    10) {
-	return;
+        10) {
+    return;
     }
     cevent_1.cflag[cindex_1.cevegh - 1] = TRUE_;
-/* 						!TURN ON END GAME */
+/*                         !TURN ON END GAME */
     cevent_1.ctick[cindex_1.cevegh - 1] = 15;
     return;
 
 L100:
     state_1.egscor += n;
-/* 						!UPDATE EG SCORE. */
+/*                         !UPDATE EG SCORE. */
 } /* scrupd_ */

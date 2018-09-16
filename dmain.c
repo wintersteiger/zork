@@ -18,9 +18,9 @@ char **argv;
 /* 2) PLAY GAME */
 
     if (init_()) {
-	game_();
+    game_();
     }
-/* 						!IF INIT, PLAY GAME. */
+/*                         !IF INIT, PLAY GAME. */
     exit_();
-/* 						!DONE */
+/*                         !DONE */
 } /* MAIN__ */

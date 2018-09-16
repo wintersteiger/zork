@@ -19,17 +19,17 @@ void savegm_()
     FILE *e;
 
     prsvec_1.prswon = FALSE_;
-/* 						!DISABLE GAME. */
+/*                         !DISABLE GAME. */
 /* Note: save file format is different for PDP vs. non-PDP versions */
 
     if ((e = fopen("dsave.dat", BINWRITE)) == NULL)
-	goto L100;
+    goto L100;
 
     gttime_(&i); 
-/* 						!GET TIME. */
+/*                         !GET TIME. */
 
 #define do_uio(i, zbuf, cbytes) \
-	(void) fwrite((const char *)(zbuf), (cbytes), (i), e)
+    (void) fwrite((const char *)(zbuf), (cbytes), (i), e)
 
     do_uio(1, &vers_1.vmaj, sizeof(integer));
     do_uio(1, &vers_1.vmin, sizeof(integer));
@@ -89,14 +89,14 @@ void savegm_()
 #undef do_uio
 
     if (fclose(e) == EOF)
-	goto L100;
+    goto L100;
 
     rspeak_(597);
     return;
 
 L100:
     rspeak_(598);
-/* 						!CANT DO IT. */
+/*                         !CANT DO IT. */
 } /* savegm_ */
 
 /* RESTORE- RESTORE GAME STATE */
@@ -110,21 +110,21 @@ void rstrgm_()
     FILE *e;
 
     prsvec_1.prswon = FALSE_;
-/* 						!DISABLE GAME. */
+/*                         !DISABLE GAME. */
 /* Note: save file format is different for PDP vs. non-PDP versions */
 
     if ((e = fopen("dsave.dat", BINREAD)) == NULL)
-	goto L100;
+    goto L100;
 
 #define do_uio(i, zbuf, cbytes) \
-	(void)fread((char *)(zbuf), (cbytes), (i), e)
+    (void)fread((char *)(zbuf), (cbytes), (i), e)
 
     do_uio(1, &i, sizeof(integer));
     do_uio(1, &j, sizeof(integer));
     do_uio(1, &k, sizeof(integer));
 
     if (i != vers_1.vmaj | j != vers_1.vmin) {
-	goto L200;
+    goto L200;
     }
 
     do_uio(1, &play_1.winner, sizeof(integer));
@@ -185,12 +185,12 @@ void rstrgm_()
 
 L100:
     rspeak_(598);
-/* 						!CANT DO IT. */
+/*                         !CANT DO IT. */
     return;
 
 L200:
     rspeak_(600);
-/* 						!OBSOLETE VERSION */
+/*                         !OBSOLETE VERSION */
     (void)fclose(e);
 } /* rstrgm_ */
 
@@ -204,146 +204,146 @@ logical walk_()
     logical ret_val;
 
     ret_val = TRUE_;
-/* 						!ASSUME WINS. */
+/*                         !ASSUME WINS. */
     if (play_1.winner != aindex_1.player || lit_(play_1.here) || prob_(25,
-	    25)) {
-	goto L500;
+        25)) {
+    goto L500;
     }
     if (! findxt_(prsvec_1.prso, play_1.here)) {
-	goto L450;
+    goto L450;
     }
-/* 						!INVALID EXIT? GRUE */
-/* 						! */
+/*                         !INVALID EXIT? GRUE */
+/*                         ! */
     switch (curxt_1.xtype) {
-	case 1:  goto L400;
-	case 2:  goto L200;
-	case 3:  goto L100;
-	case 4:  goto L300;
+    case 1:  goto L400;
+    case 2:  goto L200;
+    case 3:  goto L100;
+    case 4:  goto L300;
     }
-/* 						!DECODE EXIT TYPE. */
+/*                         !DECODE EXIT TYPE. */
     bug_(9, curxt_1.xtype);
 
 L100:
     if (cxappl_(curxt_1.xactio) != 0) {
-	goto L400;
+    goto L400;
     }
-/* 						!CEXIT... RETURNED ROOM? */
+/*                         !CEXIT... RETURNED ROOM? */
     if (flags[*xflag - 1]) {
-	goto L400;
+    goto L400;
     }
-/* 						!NO, FLAG ON? */
+/*                         !NO, FLAG ON? */
 L200:
     jigsup_(523);
-/* 						!BAD EXIT, GRUE */
-/* 						! */
+/*                         !BAD EXIT, GRUE */
+/*                         ! */
     return ret_val;
 
 L300:
     if (cxappl_(curxt_1.xactio) != 0) {
-	goto L400;
+    goto L400;
     }
-/* 						!DOOR... RETURNED ROOM? */
+/*                         !DOOR... RETURNED ROOM? */
     if ((objcts_1.oflag2[curxt_1.xobj - 1] & OPENBT) != 0) {
-	goto L400;
+    goto L400;
     }
-/* 						!NO, DOOR OPEN? */
+/*                         !NO, DOOR OPEN? */
     jigsup_(523);
-/* 						!BAD EXIT, GRUE */
-/* 						! */
+/*                         !BAD EXIT, GRUE */
+/*                         ! */
     return ret_val;
 
 L400:
     if (lit_(curxt_1.xroom1)) {
-	goto L900;
+    goto L900;
     }
-/* 						!VALID ROOM, IS IT LIT? */
+/*                         !VALID ROOM, IS IT LIT? */
 L450:
     jigsup_(522);
-/* 						!NO, GRUE */
-/* 						! */
+/*                         !NO, GRUE */
+/*                         ! */
     return ret_val;
 
 /* ROOM IS LIT, OR WINNER IS NOT PLAYER (NO GRUE). */
 
 L500:
     if (findxt_(prsvec_1.prso, play_1.here)) {
-	goto L550;
+    goto L550;
     }
-/* 						!EXIT EXIST? */
+/*                         !EXIT EXIST? */
 L525:
     curxt_1.xstrng = 678;
-/* 						!ASSUME WALL. */
+/*                         !ASSUME WALL. */
     if (prsvec_1.prso == xsrch_1.xup) {
-	curxt_1.xstrng = 679;
+    curxt_1.xstrng = 679;
     }
-/* 						!IF UP, CANT. */
+/*                         !IF UP, CANT. */
     if (prsvec_1.prso == xsrch_1.xdown) {
-	curxt_1.xstrng = 680;
+    curxt_1.xstrng = 680;
     }
-/* 						!IF DOWN, CANT. */
+/*                         !IF DOWN, CANT. */
     if ((rooms_1.rflag[play_1.here - 1] & RNWALL) != 0) {
-	curxt_1.xstrng = 524;
+    curxt_1.xstrng = 524;
     }
     rspeak_(curxt_1.xstrng);
     prsvec_1.prscon = 1;
-/* 						!STOP CMD STREAM. */
+/*                         !STOP CMD STREAM. */
     return ret_val;
 
 L550:
     switch (curxt_1.xtype) {
-	case 1:  goto L900;
-	case 2:  goto L600;
-	case 3:  goto L700;
-	case 4:  goto L800;
+    case 1:  goto L900;
+    case 2:  goto L600;
+    case 3:  goto L700;
+    case 4:  goto L800;
     }
-/* 						!BRANCH ON EXIT TYPE. */
+/*                         !BRANCH ON EXIT TYPE. */
     bug_(9, curxt_1.xtype);
 
 L700:
     if (cxappl_(curxt_1.xactio) != 0) {
-	goto L900;
+    goto L900;
     }
-/* 						!CEXIT... RETURNED ROOM? */
+/*                         !CEXIT... RETURNED ROOM? */
     if (flags[*xflag - 1]) {
-	goto L900;
+    goto L900;
     }
-/* 						!NO, FLAG ON? */
+/*                         !NO, FLAG ON? */
 L600:
     if (curxt_1.xstrng == 0) {
-	goto L525;
+    goto L525;
     }
-/* 						!IF NO REASON, USE STD. */
+/*                         !IF NO REASON, USE STD. */
     rspeak_(curxt_1.xstrng);
-/* 						!DENY EXIT. */
+/*                         !DENY EXIT. */
     prsvec_1.prscon = 1;
-/* 						!STOP CMD STREAM. */
+/*                         !STOP CMD STREAM. */
     return ret_val;
 
 L800:
     if (cxappl_(curxt_1.xactio) != 0) {
-	goto L900;
+    goto L900;
     }
-/* 						!DOOR... RETURNED ROOM? */
+/*                         !DOOR... RETURNED ROOM? */
     if ((objcts_1.oflag2[curxt_1.xobj - 1] & OPENBT) != 0) {
-	goto L900;
+    goto L900;
     }
-/* 						!NO, DOOR OPEN? */
+/*                         !NO, DOOR OPEN? */
     if (curxt_1.xstrng == 0) {
-	curxt_1.xstrng = 525;
+    curxt_1.xstrng = 525;
     }
-/* 						!IF NO REASON, USE STD. */
+/*                         !IF NO REASON, USE STD. */
     rspsub_(curxt_1.xstrng, objcts_1.odesc2[curxt_1.xobj - 1]);
     prsvec_1.prscon = 1;
-/* 						!STOP CMD STREAM. */
+/*                         !STOP CMD STREAM. */
     return ret_val;
 
 L900:
     ret_val = moveto_(curxt_1.xroom1, play_1.winner);
-/* 						!MOVE TO ROOM. */
+/*                         !MOVE TO ROOM. */
     if (ret_val) {
-	ret_val = rmdesc_(0);
+    ret_val = rmdesc_(0);
     }
-/* 						!DESCRIBE ROOM. */
+/*                         !DESCRIBE ROOM. */
     return ret_val;
 } /* walk_ */
 
@@ -363,26 +363,26 @@ integer ri;
     integer ldir;
 
     ret_val = 0;
-/* 						!NO RETURN. */
+/*                         !NO RETURN. */
     if (ri == 0) {
-	return ret_val;
+    return ret_val;
     }
-/* 						!IF NO ACTION, DONE. */
+/*                         !IF NO ACTION, DONE. */
     switch (ri) {
-	case 1:  goto L1000;
-	case 2:  goto L2000;
-	case 3:  goto L3000;
-	case 4:  goto L4000;
-	case 5:  goto L5000;
-	case 6:  goto L6000;
-	case 7:  goto L7000;
-	case 8:  goto L8000;
-	case 9:  goto L9000;
-	case 10:  goto L10000;
-	case 11:  goto L11000;
-	case 12:  goto L12000;
-	case 13:  goto L13000;
-	case 14:  goto L14000;
+    case 1:  goto L1000;
+    case 2:  goto L2000;
+    case 3:  goto L3000;
+    case 4:  goto L4000;
+    case 5:  goto L5000;
+    case 6:  goto L6000;
+    case 7:  goto L7000;
+    case 8:  goto L8000;
+    case 9:  goto L9000;
+    case 10:  goto L10000;
+    case 11:  goto L11000;
+    case 12:  goto L12000;
+    case 13:  goto L13000;
+    case 14:  goto L14000;
     }
     bug_(5, ri);
 
@@ -390,7 +390,7 @@ integer ri;
 
 L1000:
     findex_1.egyptf = objcts_1.oadv[oindex_1.coffi - 1] != play_1.winner;
-/* 						!T IF NO COFFIN. */
+/*                         !T IF NO COFFIN. */
     return ret_val;
 
 /* C2- CAROUSEL EXIT */
@@ -398,290 +398,290 @@ L1000:
 
 L2000:
     if (findex_1.caroff) {
-	return ret_val;
+    return ret_val;
     }
-/* 						!IF FLIPPED, NOTHING. */
+/*                         !IF FLIPPED, NOTHING. */
 L2500:
     rspeak_(121);
-/* 						!SPIN THE COMPASS. */
+/*                         !SPIN THE COMPASS. */
 L5000:
     i = xpars_1.xelnt[xpars_1.xcond - 1] * rnd_(8);
-/* 						!CHOOSE RANDOM EXIT. */
+/*                         !CHOOSE RANDOM EXIT. */
     curxt_1.xroom1 = exits_1.travel[rooms_1.rexit[play_1.here - 1] + i - 1] & 
-	    xpars_1.xrmask;
+        xpars_1.xrmask;
     ret_val = curxt_1.xroom1;
-/* 						!RETURN EXIT. */
+/*                         !RETURN EXIT. */
     return ret_val;
 
 /* C3- CHIMNEY FUNCTION */
 
 L3000:
     findex_1.litldf = FALSE_;
-/* 						!ASSUME HEAVY LOAD. */
+/*                         !ASSUME HEAVY LOAD. */
     j = 0;
     i__1 = objcts_1.olnt;
     for (i = 1; i <= i__1; ++i) {
-/* 						!COUNT OBJECTS. */
-	if (objcts_1.oadv[i - 1] == play_1.winner) {
-	    ++j;
-	}
+/*                         !COUNT OBJECTS. */
+    if (objcts_1.oadv[i - 1] == play_1.winner) {
+        ++j;
+    }
 /* L3100: */
     }
 
     if (j > 2) {
-	return ret_val;
+    return ret_val;
     }
-/* 						!CARRYING TOO MUCH? */
+/*                         !CARRYING TOO MUCH? */
     curxt_1.xstrng = 446;
-/* 						!ASSUME NO LAMP. */
+/*                         !ASSUME NO LAMP. */
     if (objcts_1.oadv[oindex_1.lamp - 1] != play_1.winner) {
-	return ret_val;
+    return ret_val;
     }
-/* 						!NO LAMP? */
+/*                         !NO LAMP? */
     findex_1.litldf = TRUE_;
-/* 						!HE CAN DO IT. */
+/*                         !HE CAN DO IT. */
     if ((objcts_1.oflag2[oindex_1.door - 1] & OPENBT) == 0) {
-	objcts_1.oflag2[oindex_1.door - 1] &= ~ TCHBT;
+    objcts_1.oflag2[oindex_1.door - 1] &= ~ TCHBT;
     }
     return ret_val;
 
-/* C4-	FROBOZZ FLAG (MAGNET ROOM, FAKE EXIT) */
-/* C6-	FROBOZZ FLAG (MAGNET ROOM, REAL EXIT) */
+/* C4-    FROBOZZ FLAG (MAGNET ROOM, FAKE EXIT) */
+/* C6-    FROBOZZ FLAG (MAGNET ROOM, REAL EXIT) */
 
 L4000:
     if (findex_1.caroff) {
-	goto L2500;
+    goto L2500;
     }
-/* 						!IF FLIPPED, GO SPIN. */
+/*                         !IF FLIPPED, GO SPIN. */
     findex_1.frobzf = FALSE_;
-/* 						!OTHERWISE, NOT AN EXIT. */
+/*                         !OTHERWISE, NOT AN EXIT. */
     return ret_val;
 
 L6000:
     if (findex_1.caroff) {
-	goto L2500;
+    goto L2500;
     }
-/* 						!IF FLIPPED, GO SPIN. */
+/*                         !IF FLIPPED, GO SPIN. */
     findex_1.frobzf = TRUE_;
-/* 						!OTHERWISE, AN EXIT. */
+/*                         !OTHERWISE, AN EXIT. */
     return ret_val;
 
-/* C7-	FROBOZZ FLAG (BANK ALARM) */
+/* C7-    FROBOZZ FLAG (BANK ALARM) */
 
 L7000:
     findex_1.frobzf = objcts_1.oroom[oindex_1.bills - 1] != 0 & 
-	    objcts_1.oroom[oindex_1.portr - 1] != 0;
+        objcts_1.oroom[oindex_1.portr - 1] != 0;
     return ret_val;
 /* CXAPPL, PAGE 3 */
 
-/* C8-	FROBOZZ FLAG (MRGO) */
+/* C8-    FROBOZZ FLAG (MRGO) */
 
 L8000:
     findex_1.frobzf = FALSE_;
-/* 						!ASSUME CANT MOVE. */
+/*                         !ASSUME CANT MOVE. */
     if (findex_1.mloc != curxt_1.xroom1) {
-	goto L8100;
+    goto L8100;
     }
-/* 						!MIRROR IN WAY? */
+/*                         !MIRROR IN WAY? */
     if (prsvec_1.prso == xsrch_1.xnorth || prsvec_1.prso == xsrch_1.xsouth) {
-	goto L8200;
+    goto L8200;
     }
     if (findex_1.mdir % 180 != 0) {
-	goto L8300;
+    goto L8300;
     }
-/* 						!MIRROR MUST BE N-S. */
+/*                         !MIRROR MUST BE N-S. */
     curxt_1.xroom1 = (curxt_1.xroom1 - rindex_1.mra << 1) + rindex_1.mrae;
-/* 						!CALC EAST ROOM. */
+/*                         !CALC EAST ROOM. */
     if (prsvec_1.prso > xsrch_1.xsouth) {
-	++curxt_1.xroom1;
+    ++curxt_1.xroom1;
     }
-/* 						!IF SW/NW, CALC WEST. */
+/*                         !IF SW/NW, CALC WEST. */
 L8100:
     ret_val = curxt_1.xroom1;
     return ret_val;
 
 L8200:
     curxt_1.xstrng = 814;
-/* 						!ASSUME STRUC BLOCKS. */
+/*                         !ASSUME STRUC BLOCKS. */
     if (findex_1.mdir % 180 == 0) {
-	return ret_val;
+    return ret_val;
     }
-/* 						!IF MIRROR N-S, DONE. */
+/*                         !IF MIRROR N-S, DONE. */
 L8300:
     ldir = findex_1.mdir;
-/* 						!SEE WHICH MIRROR. */
+/*                         !SEE WHICH MIRROR. */
     if (prsvec_1.prso == xsrch_1.xsouth) {
-	ldir = 180;
+    ldir = 180;
     }
     curxt_1.xstrng = 815;
-/* 						!MIRROR BLOCKS. */
+/*                         !MIRROR BLOCKS. */
     if (ldir > 180 && ! findex_1.mr1f || ldir < 180 && ! findex_1.mr2f) {
-	curxt_1.xstrng = 816;
+    curxt_1.xstrng = 816;
     }
     return ret_val;
 
-/* C9-	FROBOZZ FLAG (MIRIN) */
+/* C9-    FROBOZZ FLAG (MIRIN) */
 
 L9000:
     if (mrhere_(play_1.here) != 1) {
-	goto L9100;
+    goto L9100;
     }
-/* 						!MIRROR 1 HERE? */
+/*                         !MIRROR 1 HERE? */
     if (findex_1.mr1f) {
-	curxt_1.xstrng = 805;
+    curxt_1.xstrng = 805;
     }
-/* 						!SEE IF BROKEN. */
+/*                         !SEE IF BROKEN. */
     findex_1.frobzf = findex_1.mropnf;
-/* 						!ENTER IF OPEN. */
+/*                         !ENTER IF OPEN. */
     return ret_val;
 
 L9100:
     findex_1.frobzf = FALSE_;
-/* 						!NOT HERE, */
+/*                         !NOT HERE, */
     curxt_1.xstrng = 817;
-/* 						!LOSE. */
+/*                         !LOSE. */
     return ret_val;
 /* CXAPPL, PAGE 4 */
 
-/* C10-	FROBOZZ FLAG (MIRROR EXIT) */
+/* C10-    FROBOZZ FLAG (MIRROR EXIT) */
 
 L10000:
     findex_1.frobzf = FALSE_;
-/* 						!ASSUME CANT. */
+/*                         !ASSUME CANT. */
     ldir = (prsvec_1.prso - xsrch_1.xnorth) / xsrch_1.xnorth * 45;
-/* 						!XLATE DIR TO DEGREES. */
+/*                         !XLATE DIR TO DEGREES. */
     if (! findex_1.mropnf || (findex_1.mdir + 270) % 360 != ldir && 
-	    prsvec_1.prso != xsrch_1.xexit) {
-	goto L10200;
+        prsvec_1.prso != xsrch_1.xexit) {
+    goto L10200;
     }
     curxt_1.xroom1 = (findex_1.mloc - rindex_1.mra << 1) + rindex_1.mrae + 1 
-	    - findex_1.mdir / 180;
-/* 						!ASSUME E-W EXIT. */
+        - findex_1.mdir / 180;
+/*                         !ASSUME E-W EXIT. */
     if (findex_1.mdir % 180 == 0) {
-	goto L10100;
+    goto L10100;
     }
-/* 						!IF N-S, OK. */
+/*                         !IF N-S, OK. */
     curxt_1.xroom1 = findex_1.mloc + 1;
-/* 						!ASSUME N EXIT. */
+/*                         !ASSUME N EXIT. */
     if (findex_1.mdir > 180) {
-	curxt_1.xroom1 = findex_1.mloc - 1;
+    curxt_1.xroom1 = findex_1.mloc - 1;
     }
-/* 						!IF SOUTH. */
+/*                         !IF SOUTH. */
 L10100:
     ret_val = curxt_1.xroom1;
     return ret_val;
 
 L10200:
     if (! findex_1.wdopnf || (findex_1.mdir + 180) % 360 != ldir && 
-	    prsvec_1.prso != xsrch_1.xexit) {
-	return ret_val;
+        prsvec_1.prso != xsrch_1.xexit) {
+    return ret_val;
     }
     curxt_1.xroom1 = findex_1.mloc + 1;
-/* 						!ASSUME N. */
+/*                         !ASSUME N. */
     if (findex_1.mdir == 0) {
-	curxt_1.xroom1 = findex_1.mloc - 1;
+    curxt_1.xroom1 = findex_1.mloc - 1;
     }
-/* 						!IF S. */
+/*                         !IF S. */
     rspeak_(818);
-/* 						!CLOSE DOOR. */
+/*                         !CLOSE DOOR. */
     findex_1.wdopnf = FALSE_;
     ret_val = curxt_1.xroom1;
     return ret_val;
 
-/* C11-	MAYBE DOOR.  NORMAL MESSAGE IS THAT DOOR IS CLOSED. */
-/* 	BUT IF LCELL.NE.4, DOOR ISNT THERE. */
+/* C11-    MAYBE DOOR.  NORMAL MESSAGE IS THAT DOOR IS CLOSED. */
+/*     BUT IF LCELL.NE.4, DOOR ISNT THERE. */
 
 L11000:
     if (findex_1.lcell != 4) {
-	curxt_1.xstrng = 678;
+    curxt_1.xstrng = 678;
     }
-/* 						!SET UP MSG. */
+/*                         !SET UP MSG. */
     return ret_val;
 
-/* C12-	FROBZF (PUZZLE ROOM MAIN ENTRANCE) */
+/* C12-    FROBZF (PUZZLE ROOM MAIN ENTRANCE) */
 
 L12000:
     findex_1.frobzf = TRUE_;
-/* 						!ALWAYS ENTER. */
+/*                         !ALWAYS ENTER. */
     findex_1.cphere = 10;
-/* 						!SET SUBSTATE. */
+/*                         !SET SUBSTATE. */
     return ret_val;
 
-/* C13-	CPOUTF (PUZZLE ROOM SIZE ENTRANCE) */
+/* C13-    CPOUTF (PUZZLE ROOM SIZE ENTRANCE) */
 
 L13000:
     findex_1.cphere = 52;
-/* 						!SET SUBSTATE. */
+/*                         !SET SUBSTATE. */
     return ret_val;
 /* CXAPPL, PAGE 5 */
 
-/* C14-	FROBZF (PUZZLE ROOM TRANSITIONS) */
+/* C14-    FROBZF (PUZZLE ROOM TRANSITIONS) */
 
 L14000:
     findex_1.frobzf = FALSE_;
-/* 						!ASSSUME LOSE. */
+/*                         !ASSSUME LOSE. */
     if (prsvec_1.prso != xsrch_1.xup) {
-	goto L14100;
+    goto L14100;
     }
-/* 						!UP? */
+/*                         !UP? */
     if (findex_1.cphere != 10) {
-	return ret_val;
+    return ret_val;
     }
-/* 						!AT EXIT? */
+/*                         !AT EXIT? */
     curxt_1.xstrng = 881;
-/* 						!ASSUME NO LADDER. */
+/*                         !ASSUME NO LADDER. */
     if (puzzle_1.cpvec[findex_1.cphere] != -2) {
-	return ret_val;
+    return ret_val;
     }
-/* 						!LADDER HERE? */
+/*                         !LADDER HERE? */
     rspeak_(882);
-/* 						!YOU WIN. */
+/*                         !YOU WIN. */
     findex_1.frobzf = TRUE_;
-/* 						!LET HIM OUT. */
+/*                         !LET HIM OUT. */
     return ret_val;
 
 L14100:
     if (findex_1.cphere != 52 || prsvec_1.prso != xsrch_1.xwest || ! 
-	    findex_1.cpoutf) {
-	goto L14200;
+        findex_1.cpoutf) {
+    goto L14200;
     }
     findex_1.frobzf = TRUE_;
-/* 						!YES, LET HIM OUT. */
+/*                         !YES, LET HIM OUT. */
     return ret_val;
 
 L14200:
     for (i = 1; i <= 16; i += 2) {
-/* 						!LOCATE EXIT. */
-	if (prsvec_1.prso == puzzle_1.cpdr[i - 1]) {
-	    goto L14400;
-	}
+/*                         !LOCATE EXIT. */
+    if (prsvec_1.prso == puzzle_1.cpdr[i - 1]) {
+        goto L14400;
+    }
 /* L14300: */
     }
     return ret_val;
-/* 						!NO SUCH EXIT. */
+/*                         !NO SUCH EXIT. */
 
 L14400:
     j = puzzle_1.cpdr[i];
-/* 						!GET DIRECTIONAL OFFSET. */
+/*                         !GET DIRECTIONAL OFFSET. */
     nxt = findex_1.cphere + j;
-/* 						!GET NEXT STATE. */
+/*                         !GET NEXT STATE. */
     k = 8;
-/* 						!GET ORTHOGONAL DIR. */
+/*                         !GET ORTHOGONAL DIR. */
     if (j < 0) {
-	k = -8;
+    k = -8;
     }
     if ((abs(j) == 1 || abs(j) == 8 || (puzzle_1.cpvec[findex_1.cphere + k - 
-	    1] == 0 || puzzle_1.cpvec[nxt - k - 1] == 0)) && puzzle_1.cpvec[
-	    nxt - 1] == 0) {
-	goto L14500;
+        1] == 0 || puzzle_1.cpvec[nxt - k - 1] == 0)) && puzzle_1.cpvec[
+        nxt - 1] == 0) {
+    goto L14500;
     }
     return ret_val;
 
 L14500:
     cpgoto_(nxt);
-/* 						!MOVE TO STATE. */
+/*                         !MOVE TO STATE. */
     curxt_1.xroom1 = rindex_1.cpuzz;
-/* 						!STAY IN ROOM. */
+/*                         !STAY IN ROOM. */
     ret_val = curxt_1.xroom1;
     return ret_val;
 

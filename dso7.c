@@ -1,4 +1,4 @@
-/* ENCRYP--	ENCRYPT PASSWORD */
+/* ENCRYP--    ENCRYPT PASSWORD */
 
 /*COPYRIGHT 1980, INFOCOM COMPUTERS AND COMMUNICATIONS, CAMBRIDGE MA. 02142*/
 /* ALL RIGHTS RESERVED, COMMERCIAL USAGE STRICTLY PROHIBITED */
@@ -27,38 +27,38 @@ char *outw;
     /* Function Body */
 
     uinws = 0;
-/* 						!UNBIASED INW SUM. */
+/*                         !UNBIASED INW SUM. */
     ukeyws = 0;
-/* 						!UNBIASED KEYW SUM. */
+/*                         !UNBIASED KEYW SUM. */
     j = 1;
-/* 						!POINTER IN KEYWORD. */
+/*                         !POINTER IN KEYWORD. */
     for (i = 1; i <= 6; ++i) {
-/* 						!UNBIAS, COMPUTE SUMS. */
-	ukeyw[i - 1] = (keyw[i - 1] - 64);
-	if (inw[j] <= '@') {
-	    j = 1;
-	}
-	uinw[i - 1] = inw[j] - 64;
-	ukeyws += ukeyw[i - 1];
-	uinws += uinw[i - 1];
-	++j;
+/*                         !UNBIAS, COMPUTE SUMS. */
+    ukeyw[i - 1] = (keyw[i - 1] - 64);
+    if (inw[j] <= '@') {
+        j = 1;
+    }
+    uinw[i - 1] = inw[j] - 64;
+    ukeyws += ukeyw[i - 1];
+    uinws += uinw[i - 1];
+    ++j;
 /* L100: */
     }
 
     usum = uinws % 8 + (ukeyws % 8 << 3);
-/* 						!COMPUTE MASK. */
+/*                         !COMPUTE MASK. */
     for (i = 1; i <= 6; ++i) {
-	j = (uinw[i - 1] ^ ukeyw[i - 1] ^ usum) & 31;
-	usum = (usum + 1) % 32;
-	if (j > 26) {
-	    j %= 26;
-	}
-	outw[i] = (max(1,j) + 64);
+    j = (uinw[i - 1] ^ ukeyw[i - 1] ^ usum) & 31;
+    usum = (usum + 1) % 32;
+    if (j > 26) {
+        j %= 26;
+    }
+    outw[i] = (max(1,j) + 64);
 /* L200: */
     }
 } /* encryp_ */
 
-/* CPGOTO--	MOVE TO NEXT STATE IN PUZZLE ROOM */
+/* CPGOTO--    MOVE TO NEXT STATE IN PUZZLE ROOM */
 
 /* DECLARATIONS */
 
@@ -74,21 +74,21 @@ integer st;
     rooms_1.rflag[rindex_1.cpuzz - 1] &= ~ RSEEN;
     i__1 = objcts_1.olnt;
     for (i = 1; i <= i__1; ++i) {
-/* 						!RELOCATE OBJECTS. */
-	if (objcts_1.oroom[i - 1] == rindex_1.cpuzz && (objcts_1.oflag2[i - 1]
-		 & ACTRBT + VILLBT) == 0) {
-	    i__2 = findex_1.cphere * hyper_1.hfactr;
-	    newsta_(i, 0, i__2, 0, 0);
-	}
-	if (objcts_1.oroom[i - 1] == st * hyper_1.hfactr) {
-	    newsta_(i, 0, rindex_1.cpuzz, 0, 0);
-	}
+/*                         !RELOCATE OBJECTS. */
+    if (objcts_1.oroom[i - 1] == rindex_1.cpuzz && (objcts_1.oflag2[i - 1]
+         & ACTRBT + VILLBT) == 0) {
+        i__2 = findex_1.cphere * hyper_1.hfactr;
+        newsta_(i, 0, i__2, 0, 0);
+    }
+    if (objcts_1.oroom[i - 1] == st * hyper_1.hfactr) {
+        newsta_(i, 0, rindex_1.cpuzz, 0, 0);
+    }
 /* L100: */
     }
     findex_1.cphere = st;
 } /* cpgoto_ */
 
-/* CPINFO--	DESCRIBE PUZZLE ROOM */
+/* CPINFO--    DESCRIBE PUZZLE ROOM */
 
 /* DECLARATIONS */
 
@@ -107,58 +107,58 @@ integer st;
 
     rspeak_(rmk);
     for (i = 1; i <= 8; ++i) {
-	j = dgmoft[i - 1];
-	dgm[i - 1] = pict[puzzle_1.cpvec[st + j - 1] + 3];
-/* 						!GET PICTURE ELEMENT. */
-	if (abs(j) == 1 || abs(j) == 8) {
-	    goto L100;
-	}
-	k = 8;
-	if (j < 0) {
-	    k = -8;
-	}
-/* 						!GET ORTHO DIR. */
-	l = j - k;
-	if (puzzle_1.cpvec[st + k - 1] != 0 && puzzle_1.cpvec[st + l - 1] !=
-		 0) {
-	    dgm[i - 1] = '?';
-	}
+    j = dgmoft[i - 1];
+    dgm[i - 1] = pict[puzzle_1.cpvec[st + j - 1] + 3];
+/*                         !GET PICTURE ELEMENT. */
+    if (abs(j) == 1 || abs(j) == 8) {
+        goto L100;
+    }
+    k = 8;
+    if (j < 0) {
+        k = -8;
+    }
+/*                         !GET ORTHO DIR. */
+    l = j - k;
+    if (puzzle_1.cpvec[st + k - 1] != 0 && puzzle_1.cpvec[st + l - 1] !=
+         0) {
+        dgm[i - 1] = '?';
+    }
 L100:
-	;
+    ;
     }
 
     more_output(NULL);
     printf("       |%c%c %c%c %c%c|\n", dgm[0], dgm[0], dgm[1], dgm[1],
-					dgm[2], dgm[2]);
+                    dgm[2], dgm[2]);
     more_output(NULL);
     printf(" West  |%c%c .. %c%c| East\n", dgm[3], dgm[3], dgm[4], dgm[4]);
     more_output(NULL);
     printf("       |%c%c %c%c %c%c|\n", dgm[5], dgm[5], dgm[6], dgm[6],
-					dgm[7], dgm[7]);
+                    dgm[7], dgm[7]);
 
     if (st == 10) {
-	rspeak_(870);
+    rspeak_(870);
     }
-/* 						!AT HOLE? */
+/*                         !AT HOLE? */
     if (st == 37) {
-	rspeak_(871);
+    rspeak_(871);
     }
-/* 						!AT NICHE? */
+/*                         !AT NICHE? */
     i = 872;
-/* 						!DOOR OPEN? */
+/*                         !DOOR OPEN? */
     if (findex_1.cpoutf) {
-	i = 873;
+    i = 873;
     }
     if (st == 52) {
-	rspeak_(i);
+    rspeak_(i);
     }
-/* 						!AT DOOR? */
+/*                         !AT DOOR? */
     if (puzzle_1.cpvec[st] == -2) {
-	rspeak_(874);
+    rspeak_(874);
     }
-/* 						!EAST LADDER? */
+/*                         !EAST LADDER? */
     if (puzzle_1.cpvec[st - 2] == -3) {
-	rspeak_(875);
+    rspeak_(875);
     }
-/* 						!WEST LADDER? */
+/*                         !WEST LADDER? */
 } /* cpinfo_ */
