@@ -36,6 +36,7 @@
 
 typedef int integer;
 typedef int logical;
+#define INTFMT "%lu"
 
 #define TRUE_ (1)
 #define FALSE_ (0)
