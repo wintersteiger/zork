@@ -123,3 +123,6 @@ sobjs.o: funcs.h vars.h
 sverbs.o: funcs.h vars.h
 verbs.o: funcs.h vars.h
 villns.o: funcs.h vars.h
+
+tags: $(CSRC)
+	etags $(CSRC) *.h
